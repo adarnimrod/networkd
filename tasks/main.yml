@@ -7,6 +7,11 @@
         - ansible_distribution_major_version >= 8
         - ansible_service_mgr == 'systemd'
 
+- name: APT install
+  with_items:
+      - libnss-myhostname
+      - libnss-resolve
+
 - name: Configure network interfaces
   with_fileglob:
       - templates/networkd/*.netdev
