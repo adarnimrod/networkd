@@ -6,3 +6,35 @@
         - ansible_os_family == 'Debian'
         - ansible_distribution_major_version >= 8
         - ansible_service_mgr == 'systemd'
+
+- name: Configure network interfaces
+  with_fileglob:
+      - templates/networkd/*.netdev
+      - '{{ playbook_dir }}/templates/networkd/*.netdev'
+      - templates/networkd/*.network
+      - '{{ playbook_dir }}/templates/networkd/*.network'
+      - templates/networkd/*.link
+      - '{{ playbook_dir }}/templates/networkd/*.link'
+  template:
+      src: '{{ item }}'
+      dest: '/etc/systemd/network/{{ item|basename }}'
+      owner: root
+      group: root
+      mode: 0o0644
+  notify:
+      - Reload Systemd-networkd
+
+- name: Disable ifupdown, enable networkd
+  with_items:
+      - name: systemd-resolved
+        state: started
+        enabled: yes
+      - name: systemd-networkd
+        state: started
+        enabled: yes
+      - name: networking
+        enabled: no
+  service:
+      name: '{{ item.name }}'
+      state: '{{ item.state|default(omit) }}'
+      enabled: '{{ item.enabled }}'
