@@ -11,6 +11,11 @@
   with_items:
       - libnss-myhostname
       - libnss-resolve
+  apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+      cache_valid_time: 3600
 
 - name: Configure network interfaces
   with_fileglob:
