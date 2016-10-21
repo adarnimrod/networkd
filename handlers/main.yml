@@ -1,6 +1,6 @@
 ---
 # handlers file for ansible-role-networkd
-- name: Reload Systemd-networkd
+- name: Restart Systemd-networkd
   service:
       name: systemd-networkd
-      state: reloaded
+      state: restarted

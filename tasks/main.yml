@@ -32,7 +32,7 @@
       group: root
       mode: 0o0644
   notify:
-      - Reload Systemd-networkd
+      - Restart Systemd-networkd
 
 - name: Disable ifupdown, enable networkd
   with_items:
