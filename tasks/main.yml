@@ -19,11 +19,11 @@
 
 - name: Configure network interfaces
   with_fileglob:
-      - templates/networkd/*.netdev
+      - '{{ role_path }}/templates/networkd/*.netdev'
       - '{{ playbook_dir }}/templates/networkd/*.netdev'
-      - templates/networkd/*.network
+      - '{{ role_path }}/templates/networkd/*.network'
       - '{{ playbook_dir }}/templates/networkd/*.network'
-      - templates/networkd/*.link
+      - '{{ role_path }}/templates/networkd/*.link'
       - '{{ playbook_dir }}/templates/networkd/*.link'
   template:
       src: '{{ item }}'
