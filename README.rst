@@ -63,6 +63,4 @@ at: https://www.shore.co.il/git/.
 TODO
 ----
 
-- Support for Ubuntu Xenial (better assertions as well).
-- Maybe detect Systemd version?
 - Tests.

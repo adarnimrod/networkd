@@ -9,5 +9,8 @@ galaxy_info:
     versions:
     - Jessie
     - Stretch
+  - name: Ubuntu
+    versions:
+    - xenial
   galaxy_tags: [ ansible ]
 dependencies: []
