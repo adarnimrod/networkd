@@ -1,4 +1,9 @@
 ---
+- hosts: networkd-xenial
+  gather_facts: false
+  roles: [debian-bootstrap]
+
 - hosts: all
+  strategy: free
   roles:
-    - role: ansible-role-networkd
+    - role: networkd
