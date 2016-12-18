@@ -35,17 +35,23 @@
   notify:
       - Restart Systemd-networkd
 
-- name: Disable ifupdown, enable networkd
-  with_items:
-      - name: systemd-resolved
-        state: started
-        enabled: yes
-      - name: systemd-networkd
-        state: started
-        enabled: yes
-      - name: networking
-        enabled: no
+- name: Check if networking service is available
+  stat:
+      path: /etc/init.d/networking
+  register: stat_networking
+
+- name: Disable networking service
+  when: stat_networking.stat.exists
   service:
-      name: '{{ item.name }}'
-      state: '{{ item.state|default(omit) }}'
-      enabled: '{{ item.enabled }}'
+      name: networking
+      state: stopped
+      enabled: no
+
+- name: Enable services
+  with_items:
+      - systemd-resolved
+      - systemd-networkd
+  service:
+      name: '{{ item }}'
+      state: started
+      enabled: yes
